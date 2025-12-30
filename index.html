@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Stencil Maker | Convert Your Art in Seconds</title>
+    <meta name="description" content="Create custom stencils from photos with our simple online tool. No downloads needed. Perfect for spray painting, wood burning, and craft projects.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Online Stencil Maker | Convert Your Art in Seconds">
+    <meta property="og:description" content="Create custom stencils from photos with our simple online tool. No downloads needed. Perfect for spray painting, wood burning, and craft projects.">
+    <meta property="og:image" content="images/hero-bg.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Online Stencil Maker | Convert Your Art in Seconds">
+    <meta property="twitter:description" content="Create custom stencils from photos with our simple online tool. No downloads needed. Perfect for spray painting, wood burning, and craft projects.">
+    <meta property="twitter:image" content="images/hero-bg.jpg">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.stencilgenerator.io">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Fix for orphaned classes not defined in styles.css */
+        .loader { display: flex; flex-direction: column; align-items: center; }
+        .actions { display: flex; flex-direction: column; gap: 1rem; }
+    </style>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Stencilmaker",
+      "description": "Create custom stencils from photos with our simple online tool. No downloads needed. Perfect for spray painting, wood burning, and craft projects.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "mainEntity": {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the Stencil Maker tool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our Stencil Maker is an AI-powered image effect that instantly transforms your photos into high-quality stencil art. It intelligently analyzes your image and converts it into a simplified, high-contrast design perfect for crafts, DIY projects, and artistic creations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to create a stencil?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The process is incredibly fast. While the exact time depends on the complexity of your uploaded image, our AI is optimized to generate your stencil in just a few seconds, providing one of the fastest outputs available."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What kind of photos produce the best results?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For optimal results, use images with clear subjects, good lighting, and strong contrast between the subject and the background. Photos with uncluttered backgrounds, such as portraits or isolated objects, tend to create the cleanest stencils."
+            }
+          }
+        ]
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">STENCILMAKER</div>
+        <button class="menu-toggle" aria-label="Toggle Navigation">☰</button>
+        <nav>
+            <a href="#how-to-use">How It Works</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#faq">FAQ</a>
+            <a href="#playground" class="btn btn-primary nav-cta">GENERATE</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-bg-animation">
+            <!-- Geometric Grid Animation implemented in CSS/JS -->
+        </div>
+        <div class="hero-bg-image">
+            <img src="images/hero-bg.jpg" alt="Industrial concrete wall with blueprint grid" loading="eager">
+        </div>
+        <div class="hero-content reveal-on-scroll">
+            <h1>AI Stencil Maker</h1>
+            <p>Simply upload your image and let our AI-powered stencil maker do the work. Get a perfect, usable stencil outline in just a few clicks.</p>
+            <a href="#playground" class="btn btn-primary btn-large">GENERATE</a>
+        </div>
+    </section>
+
+    <!-- Playground Section -->
+    <section id="playground">
+        <div class="container">
+            <div class="section-header">
+                <h2>AI Stencil Maker</h2>
+                <p>Simply upload your image and let our AI-powered stencil maker do the work. Get a perfect, usable stencil outline in just a few clicks. No sign-up.</p>
+            </div>
+
+            <div class="playground-grid">
+                <!-- Left: Controls -->
+                <div class="control-panel">
+                    <div id="upload-zone" class="upload-zone">
+                        <input type="file" id="file-input" accept="image/*" hidden>
+                        <div class="upload-content">
+                            <div class="icon">⬆</div>
+                            <p>Drag & Drop or Click to Upload</p>
+                            <span class="file-info">Supports JPG, PNG, WEBP</span>
+                        </div>
+                        <img id="preview-image" class="preview-image hidden" alt="Upload Preview">
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="generate-btn" class="btn btn-primary full-width">Generate</button>
+                        <button id="reset-btn" class="btn btn-secondary full-width hidden">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Right: Result -->
+                <div class="result-panel">
+                    <div id="result-container" class="result-display">
+                        <div class="result-placeholder">
+                            <div class="loader hidden" id="loading-state">
+                                <div class="spinner"></div>
+                                <p>PROCESSING...</p>
+                            </div>
+                            <p class="placeholder-text">Result will appear here</p>
+                        </div>
+                        <img id="result-final" class="hidden" alt="Stencil Result">
+                    </div>
+                    <a id="download-btn" class="btn btn-accent full-width disabled">Download Stencil</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Does It Work?</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card reveal-on-scroll">
+                    <div class="step-number">1</div>
+                    <h3>Upload Image</h3>
+                    <p>Choose any image from your gallery or computer to start.</p>
+                </div>
+                <div class="step-card reveal-on-scroll" style="transition-delay: 0.2s">
+                    <div class="step-number">2</div>
+                    <h3>Generate Stencil</h3>
+                    <p>The tool automatically converts your image into a stencil outline.</p>
+                </div>
+                <div class="step-card reveal-on-scroll" style="transition-delay: 0.4s">
+                    <div class="step-number">3</div>
+                    <h3>Download & Share</h3>
+                    <p>Download your generated Stencil Maker to your device and share it on your favorite social media platform, and with your friends and family.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Gallery</h2>
+                <p>See what's possible with our AI Stencil Maker.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal-on-scroll">
+                    <img src="images/gallery-result-1.jpg" alt="Roaring lion face stencil art">
+                </div>
+                <div class="gallery-item reveal-on-scroll" style="transition-delay: 0.1s">
+                    <img src="images/gallery-result-2.jpg" alt="Skateboarder silhouette stencil">
+                </div>
+                <div class="gallery-item reveal-on-scroll" style="transition-delay: 0.2s">
+                    <img src="images/gallery-result-3.jpg" alt="Geometric rose flower stencil">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What People Say about us</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal-on-scroll">
+                    <p class="quote">"This is my go-to for quick stencils. It's super easy to use and the results are always clean."</p>
+                    <div class="author">
+                        <span class="name">Sophia</span>
+                        <span class="role">iOS user from USA</span>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal-on-scroll" style="transition-delay: 0.2s">
+                    <p class="quote">"I've tried a few stencil tools, but this one is the best by far. As a long-time Max Studio user, I appreciate how smoothly it works."</p>
+                    <div class="author">
+                        <span class="name">Elijah</span>
+                        <span class="role">Digital Artist</span>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal-on-scroll" style="transition-delay: 0.4s">
+                    <p class="quote">"Incredibly fast and does exactly what it promises. Turned my complex photo into a perfect stencil in seconds!"</p>
+                    <div class="author">
+                        <span class="name">Liam</span>
+                        <span class="role">Web user from UK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">What is the Stencil Maker tool?</button>
+                    <div class="faq-answer">
+                        <p>Our Stencil Maker is an AI-powered image effect that instantly transforms your photos into high-quality stencil art. It intelligently analyzes your image and converts it into a simplified, high-contrast design perfect for crafts, DIY projects, and artistic creations.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How long does it take to create a stencil?</button>
+                    <div class="faq-answer">
+                        <p>The process is incredibly fast. While the exact time depends on the complexity of your uploaded image, our AI is optimized to generate your stencil in just a few seconds, providing one of the fastest outputs available.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">What kind of photos produce the best results?</button>
+                    <div class="faq-answer">
+                        <p>For optimal results, use images with clear subjects, good lighting, and strong contrast between the subject and the background. Photos with uncluttered backgrounds, such as portraits or isolated objects, tend to create the cleanest stencils.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">STENCILMAKER</div>
+            <div class="footer-links">
+                <a href="#" data-modal-target="privacy-modal">Privacy Policy</a>
+                <a href="#" data-modal-target="terms-modal">Terms of Service</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Stencilmaker. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Privacy Policy</h3>
+                <button class="close-modal" data-modal-close="privacy-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Last Updated:</strong> 2024</p>
+                <h4>1. Data Collection</h4>
+                <p>We collect only the minimum data necessary:</p>
+                <ul>
+                    <li>Images you upload for processing (temporarily stored)</li>
+                    <li>Basic usage analytics (non-personal)</li>
+                    <li>Browser type and device information</li>
+                </ul>
+                <h4>2. Image Processing</h4>
+                <p>Your uploaded images are:</p>
+                <ul>
+                    <li>Processed securely on our servers</li>
+                    <li>Automatically deleted within 24 hours</li>
+                    <li>Never shared with third parties</li>
+                    <li>Not used for AI training without consent</li>
+                </ul>
+                <h4>3. Data Security</h4>
+                <p>All data transmission is encrypted using SSL/TLS protocols.</p>
+                <h4>4. Cookies</h4>
+                <p>We use essential cookies only for site functionality.</p>
+                <h4>5. Your Rights</h4>
+                <p>You have the right to request deletion of any stored data.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Terms of Service</h3>
+                <button class="close-modal" data-modal-close="terms-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Last Updated:</strong> 2024</p>
+                <h4>1. Acceptance of Terms</h4>
+                <p>By using this service, you agree to these Terms.</p>
+                <h4>2. Service Description</h4>
+                <p>This service provides AI-powered image transformation. Provided "as-is" without warranties.</p>
+                <h4>3. Acceptable Use</h4>
+                <p>You agree NOT to upload:</p>
+                <ul>
+                    <li>Illegal or unlawful content</li>
+                    <li>Explicit, pornographic, or obscene material</li>
+                    <li>Content depicting violence or harm</li>
+                    <li>Images you do not have rights to use</li>
+                </ul>
+                <h4>4. Intellectual Property</h4>
+                <p>You retain full ownership of your original images. Generated effects are royalty-free for personal and commercial use.</p>
+                <h4>5. Limitation of Liability</h4>
+                <p>We are not liable for any damages arising from the use of this service.</p>
+                <h4>6. Modifications</h4>
+                <p>We may update these terms at any time. Continued use constitutes acceptance.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
